@@ -1,38 +1,39 @@
-import os
+from jhk_imports import *
 
-ind = 'ind.txt'
+ind = 'ind_rename.txt'
 
 
 def code():
-    files = os.listdir()
-    if os.path.exists(ind):
-        os.remove(ind)
-    f = open(ind, 'w')
+    fo = open(ind_self, 'w')
+    files = my_list_all_txt_files(folder, [], [ind, '.py'], [])
     i = 0
-    for file in files:
-        if file.find('.txt') != -1:
-            continue
-        if file.find('.py') != -1:
-            continue
-        print(file)
-        f.writelines(file + '\n')
-        os.rename(file, str(i) + '.bin')
+    for fi, file in enumerate(files):
+        print('\r' + str(fi) + ' % ' + str(files.__len__()), end='')
+        fo.writelines(file + '\n')
+        os.rename(file, file[:1 + file.find(my_get_level_dir(file, 1))] + str(i) + '.bin')
         i = i + 1
-    f.close()
+    fo.close()
 
 
 def decode():
-    f = open(ind, 'r+')
-    i = 0
-    while 1:
-        x = f.readline(100)
+    fo = open(ind_self, 'r+')
+    files = my_list_all_txt_files(folder, ['.bin'], [])
+    for fi, file in enumerate(files):
+        x = fo.readline(100)
         if x == '':
             break
-        os.rename(str(i) + '.bin', x[:-1])
-        i = i + 1
-        print(x)
+        os.rename(file, x[:-1])
+        print('\r' + str(fi) + ' % ' + str(files.__len__()), end='')
+    fo.close()
+    os.remove(ind_self)
 
 
 if __name__ == '__main__':
-    # code()
-    decode()
+    folder = r'E:\assortment\201904vivo_pt101\datasave\客户测试\0706组合键'
+    fs = my_list_all_txt_files(folder, ['.txt'], [], [])
+    ind_self = os.path.join(folder, ind)
+
+    if ind_self in fs:
+        decode()
+    else:
+        code()

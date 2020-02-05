@@ -29,7 +29,7 @@ def decode():
 
 
 if __name__ == '__main__':
-    folder = r'D:\test_py_folder\190918'
+    folder = r'D:\test_py_folder\191204'
     fs = my_list_all_txt_files(folder, ['.txt'], [], [])
     ind_self = os.path.join(folder, ind)
 
